@@ -7,7 +7,7 @@
     <style>
         body { margin: 0; overflow: hidden; touch-action: none; font-family: sans-serif; background: #000; }
         
-        /* Прицел */
+        /* ГЏГ°ГЁГ¶ГҐГ« */
         #crosshair {
             position: absolute; top: 50%; left: 50%;
             width: 20px; height: 20px;
@@ -27,14 +27,14 @@
             text-shadow: 1px 1px 0 #000; pointer-events: none; z-index: 5;
         }
 
-        /* Экранные кнопки управления */
+        /* ГќГЄГ°Г Г­Г­Г»ГҐ ГЄГ­Г®ГЇГЄГЁ ГіГЇГ°Г ГўГ«ГҐГ­ГЁГї */
         .controls-layer {
             position: absolute; bottom: 20px; width: 100%; height: 150px;
             pointer-events: none; display: flex; justify-content: space-between; padding: 0 20px;
             box-sizing: border-box; z-index: 10;
         }
 
-        /* Джойстик (Зона) */
+        /* Г„Г¦Г®Г©Г±ГІГЁГЄ (Г‡Г®Г­Г ) */
         #joystick-zone {
             width: 120px; height: 120px;
             background: rgba(255, 255, 255, 0.1);
@@ -53,7 +53,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Кнопка стрельбы */
+        /* ГЉГ­Г®ГЇГЄГ  Г±ГІГ°ГҐГ«ГјГЎГ» */
         #shoot-btn {
             width: 80px; height: 80px;
             background: rgba(255, 0, 0, 0.6);
@@ -65,10 +65,10 @@
         }
         #shoot-btn:active { background: rgba(255, 0, 0, 0.9); transform: scale(0.95); }
 
-        /* Зона вращения камеры (правая половина экрана) */
+        /* Г‡Г®Г­Г  ГўГ°Г Г№ГҐГ­ГЁГї ГЄГ Г¬ГҐГ°Г» (ГЇГ°Г ГўГ Гї ГЇГ®Г«Г®ГўГЁГ­Г  ГЅГЄГ°Г Г­Г ) */
         #look-zone {
             position: absolute; top: 0; right: 0; width: 50%; height: 100%;
-            z-index: 1; /* Ниже кнопок */
+            z-index: 1; /* ГЌГЁГ¦ГҐ ГЄГ­Г®ГЇГ®ГЄ */
         }
 
         #start-screen {
@@ -85,14 +85,14 @@
     <div id="crosshair"></div>
     <div id="ui">HP: <span id="hp">100</span> | Kills: <span id="score">0</span></div>
 
-    <!-- Экран старта -->
+    <!-- ГќГЄГ°Г Г­ Г±ГІГ Г°ГІГ  -->
     <div id="start-screen">
         <h1>KRUNKER MOBILE</h1>
-        <p>Левый стик - Ходить<br>Правая часть - Смотреть<br>Красная кнопка - Огонь</p>
-        <button class="start" onclick="startGame()">НАЧАТЬ ИГРУ</button>
+        <p>Г‹ГҐГўГ»Г© Г±ГІГЁГЄ - Г•Г®Г¤ГЁГІГј<br>ГЏГ°Г ГўГ Гї Г·Г Г±ГІГј - Г‘Г¬Г®ГІГ°ГҐГІГј<br>ГЉГ°Г Г±Г­Г Гї ГЄГ­Г®ГЇГЄГ  - ГЋГЈГ®Г­Гј</p>
+        <button class="start" onclick="startGame()">ГЌГЂГ—ГЂГ’Гњ Г€ГѓГђГ“</button>
     </div>
 
-    <!-- Управление -->
+    <!-- Г“ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ -->
     <div class="controls-layer">
         <div id="joystick-zone">
             <div id="joystick-knob"></div>
@@ -100,7 +100,7 @@
         <div id="shoot-btn">FIRE</div>
     </div>
     
-    <!-- Невидимая зона для вращения камерой -->
+    <!-- ГЌГҐГўГЁГ¤ГЁГ¬Г Гї Г§Г®Г­Г  Г¤Г«Гї ГўГ°Г Г№ГҐГ­ГЁГї ГЄГ Г¬ГҐГ°Г®Г© -->
     <div id="look-zone"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -114,12 +114,12 @@
         let isGameActive = false;
         let gun;
 
-        // Переменные движения
+        // ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г¤ГўГЁГ¦ГҐГ­ГЁГї
         let moveForward = 0; // -1 to 1
         let moveRight = 0;   // -1 to 1
         let playerVelocity = new THREE.Vector3();
         
-        // Переменные камеры
+        // ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ ГЄГ Г¬ГҐГ°Г»
         let camYaw = 0;
         let camPitch = 0;
 
@@ -134,18 +134,18 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement);
 
-            // Свет
+            // Г‘ГўГҐГІ
             const light = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
             scene.add(light);
 
-            // Пол
+            // ГЏГ®Г«
             const floorGeo = new THREE.PlaneGeometry(500, 500);
             const floorMat = new THREE.MeshStandardMaterial({ color: 0x2ecc71 });
             const floor = new THREE.Mesh(floorGeo, floorMat);
             floor.rotation.x = -Math.PI / 2;
             scene.add(floor);
 
-            // Ящики
+            // ГџГ№ГЁГЄГЁ
             const boxGeo = new THREE.BoxGeometry(5, 5, 5);
             const boxMat = new THREE.MeshStandardMaterial({ color: 0xcd853f });
             for(let i=0; i<30; i++) {
@@ -154,14 +154,14 @@
                 scene.add(box);
             }
 
-            // Оружие
+            // ГЋГ°ГіГ¦ГЁГҐ
             const gunGeo = new THREE.BoxGeometry(0.2, 0.2, 1);
             const gunMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
             gun = new THREE.Mesh(gunGeo, gunMat);
             gun.position.set(0.3, -0.3, -0.5);
             camera.add(gun);
             scene.add(camera);
-            camera.position.y = 2; // Рост игрока
+            camera.position.y = 2; // ГђГ®Г±ГІ ГЁГЈГ°Г®ГЄГ 
 
             setupControls();
             setInterval(spawnEnemy, 2000);
@@ -173,14 +173,14 @@
             isGameActive = true;
         }
 
-        // --- УПРАВЛЕНИЕ (ТЕЛЕФОН) ---
+        // --- Г“ГЏГђГЂГ‚Г‹Г…ГЌГ€Г… (Г’Г…Г‹Г…Г”ГЋГЌ) ---
         function setupControls() {
             const joystickZone = document.getElementById('joystick-zone');
             const knob = document.getElementById('joystick-knob');
             const lookZone = document.getElementById('look-zone');
             const shootBtn = document.getElementById('shoot-btn');
 
-            // Джойстик
+            // Г„Г¦Г®Г©Г±ГІГЁГЄ
             let joyStartX, joyStartY;
             joystickZone.addEventListener('touchstart', (e) => {
                 joyStartX = e.touches[0].clientX;
@@ -192,7 +192,7 @@
                 const deltaX = e.touches[0].clientX - joyStartX;
                 const deltaY = e.touches[0].clientY - joyStartY;
                 
-                // Ограничиваем движение ручки
+                // ГЋГЈГ°Г Г­ГЁГ·ГЁГўГ ГҐГ¬ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ Г°ГіГ·ГЄГЁ
                 const distance = Math.min(35, Math.sqrt(deltaX*deltaX + deltaY*deltaY));
                 const angle = Math.atan2(deltaY, deltaX);
                 
@@ -201,9 +201,9 @@
                 
                 knob.style.transform = `translate(calc(-50% + ${kx}px), calc(-50% + ${ky}px))`;
 
-                // Нормализуем ввод (-1 до 1)
+                // ГЌГ®Г°Г¬Г Г«ГЁГ§ГіГҐГ¬ ГўГўГ®Г¤ (-1 Г¤Г® 1)
                 moveRight = kx / 35;
-                moveForward = -(ky / 35); // Инверсия Y
+                moveForward = -(ky / 35); // Г€Г­ГўГҐГ°Г±ГЁГї Y
             });
 
             joystickZone.addEventListener('touchend', () => {
@@ -212,7 +212,7 @@
                 moveRight = 0;
             });
 
-            // Вращение камерой (Правая часть)
+            // Г‚Г°Г Г№ГҐГ­ГЁГҐ ГЄГ Г¬ГҐГ°Г®Г© (ГЏГ°Г ГўГ Гї Г·Г Г±ГІГј)
             let lastLookX, lastLookY;
             lookZone.addEventListener('touchstart', (e) => {
                 lastLookX = e.touches[0].clientX;
@@ -228,14 +228,14 @@
                 camYaw -= (x - lastLookX) * sensitivity;
                 camPitch -= (y - lastLookY) * sensitivity;
                 
-                // Ограничение взгляда вверх/вниз
+                // ГЋГЈГ°Г Г­ГЁГ·ГҐГ­ГЁГҐ ГўГ§ГЈГ«ГїГ¤Г  ГўГўГҐГ°Гµ/ГўГ­ГЁГ§
                 camPitch = Math.max(-Math.PI/2, Math.min(Math.PI/2, camPitch));
 
                 lastLookX = x;
                 lastLookY = y;
             });
 
-            // Стрельба
+            // Г‘ГІГ°ГҐГ«ГјГЎГ 
             shootBtn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 shoot();
@@ -245,7 +245,7 @@
         function shoot() {
             if(!isGameActive) return;
             
-            // Анимация
+            // ГЂГ­ГЁГ¬Г Г¶ГЁГї
             gun.position.z = -0.3;
             setTimeout(() => gun.position.z = -0.5, 100);
 
@@ -255,7 +255,7 @@
             
             bullet.position.copy(camera.position);
             
-            // Направление пули совпадает с направлением камеры
+            // ГЌГ ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ ГЇГіГ«ГЁ Г±Г®ГўГЇГ Г¤Г ГҐГІ Г± Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐГ¬ ГЄГ Г¬ГҐГ°Г»
             const direction = new THREE.Vector3(0, 0, -1);
             direction.applyEuler(new THREE.Euler(camPitch, camYaw, 0, 'YXZ'));
             
@@ -284,21 +284,21 @@
             requestAnimationFrame(animate);
             if(!isGameActive) return;
 
-            // Применение вращения камеры
+            // ГЏГ°ГЁГ¬ГҐГ­ГҐГ­ГЁГҐ ГўГ°Г Г№ГҐГ­ГЁГї ГЄГ Г¬ГҐГ°Г»
             camera.rotation.set(camPitch, camYaw, 0, 'YXZ');
 
-            // Движение игрока
+            // Г„ГўГЁГ¦ГҐГ­ГЁГҐ ГЁГЈГ°Г®ГЄГ 
             const speed = 0.2;
             const direction = new THREE.Vector3();
             
-            // Получаем направление "вперед" относительно поворота камеры (только Y)
+            // ГЏГ®Г«ГіГ·Г ГҐГ¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ "ГўГЇГҐГ°ГҐГ¤" Г®ГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г® ГЇГ®ГўГ®Г°Г®ГІГ  ГЄГ Г¬ГҐГ°Г» (ГІГ®Г«ГјГЄГ® Y)
             const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), camYaw);
             const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), camYaw);
 
             camera.position.add(forward.multiplyScalar(moveForward * speed));
             camera.position.add(right.multiplyScalar(moveRight * speed));
 
-            // Пули
+            // ГЏГіГ«ГЁ
             for(let i = bullets.length - 1; i >= 0; i--) {
                 const b = bullets[i];
                 b.position.add(b.userData.velocity);
@@ -308,11 +308,11 @@
                 }
             }
 
-            // Враги
+            // Г‚Г°Г ГЈГЁ
             for(let i = enemies.length - 1; i >= 0; i--) {
                 const e = enemies[i];
                 e.lookAt(camera.position);
-                e.translateZ(0.08); // Медленные враги
+                e.translateZ(0.08); // ГЊГҐГ¤Г«ГҐГ­Г­Г»ГҐ ГўГ°Г ГЈГЁ
 
                 if(e.position.distanceTo(camera.position) < 2) {
                     hp -= 1;
